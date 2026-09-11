@@ -1,30 +1,119 @@
 package org.ombr24.mb1;
 
 import org.ombr24.mb1.config.*;
+import org.ombr24.mb1.exception.InvalidInputException;
 import org.ombr24.mb1.utils.XlsProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Головний клас додатку для обробки звітів бойових підрозділів
+ */
 public class Application {
-    public static void main(String[] args) throws IOException {
-        AppConfig config = new AppConfigLoader().load();
-        ReferenceData refData = new ReferenceDataLoader().load(config);
+    
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+    private static final int MIN_DAY = 1;
+    private static final int MAX_DAY = 31;
 
-        int startDate = readDate();
-        int endDate = readDate();
-        for (int dayOfMonth = startDate; dayOfMonth <= endDate; dayOfMonth++) {
-            new XlsProcessor(config, refData).process(dayOfMonth);
+    public static void main(String[] args) {
+        BufferedReader reader = null;
+        try {
+            logger.info("=== Запуск додатку обробки звітів ===");
+            logger.info("Робоча директорія: {}", System.getProperty("user.dir"));
 
+            AppConfig config = new AppConfigLoader().load();
+            logger.info("Конфігурацію завантажено успішно");
+
+            ReferenceData refData = new ReferenceDataLoader().load(config);
+            logger.info("Довідкові дані завантажено успішно");
+
+            // Створюємо reader один раз для всіх читань
+            reader = new BufferedReader(new InputStreamReader(System.in));
+
+            int startDate = readDate("Введіть початкову дату (день місяця)", reader);
+            int endDate = readDate("Введіть кінцеву дату (день місяця)", reader);
+
+            validateDateRange(startDate, endDate);
+
+            logger.info("Обробка звітів з {} по {} число", startDate, endDate);
+
+            for (int dayOfMonth = startDate; dayOfMonth <= endDate; dayOfMonth++) {
+                logger.info("Обробка даних за {} число...", dayOfMonth);
+                new XlsProcessor(config, refData).process(dayOfMonth);
+                logger.info("Обробку за {} число завершено успішно", dayOfMonth);
+            }
+
+            logger.info("=== Обробка всіх звітів завершена успішно ===");
+
+        } catch (InvalidInputException e) {
+            logger.error("Помилка валідації вводу: {}", e.getMessage());
+            System.err.println("Помилка: " + e.getMessage());
+            System.exit(1);
+        } catch (Exception e) {
+            logger.error("Критична помилка виконання програми", e);
+            System.err.println("Критична помилка: " + e.getMessage());
+            System.exit(1);
+        } finally {
+            // Закриваємо reader в finally блоці
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    logger.warn("Не вдалося закрити BufferedReader", e);
+                }
+            }
         }
-
     }
 
-    private static int readDate() throws IOException {
-        System.out.println(System.getProperty("user.dir"));
-        System.out.println("За яке число");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        return Integer.parseInt(reader.readLine());
+    /**
+     * Читає та валідує день місяця від користувача
+     */
+    private static int readDate(String prompt, BufferedReader reader) {
+        System.out.println(prompt + " (" + MIN_DAY + "-" + MAX_DAY + "):");
+
+        try {
+            String input = reader.readLine();
+            
+            if (input == null || input.trim().isEmpty()) {
+                throw new InvalidInputException("Введення не може бути порожнім");
+            }
+
+            try {
+                int day = Integer.parseInt(input.trim());
+                validateDay(day);
+                return day;
+            } catch (NumberFormatException e) {
+                throw new InvalidInputException("Невірний формат числа: " + input);
+            }
+
+        } catch (IOException e) {
+            throw new InvalidInputException("Помилка читання вводу", e);
+        }
+    }
+
+    /**
+     * Валідує день місяця
+     */
+    private static void validateDay(int day) {
+        if (day < MIN_DAY || day > MAX_DAY) {
+            throw new InvalidInputException(
+                    String.format("День має бути в діапазоні %d-%d. Введено: %d", 
+                            MIN_DAY, MAX_DAY, day));
+        }
+    }
+
+    /**
+     * Валідує діапазон дат
+     */
+    private static void validateDateRange(int startDate, int endDate) {
+        if (startDate > endDate) {
+            throw new InvalidInputException(
+                    String.format("Початкова дата (%d) не може бути більшою за кінцеву (%d)", 
+                            startDate, endDate));
+        }
     }
 }
