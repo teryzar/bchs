@@ -1,0 +1,34 @@
+package org.ombr24.mb1.config;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class ReferenceData {
+
+    private final List<String> positions70;
+    private final List<String> positions100;
+    private final Map<String, String> commanderPosiitions;
+
+    public ReferenceData(
+            List<String> positions70,
+            List<String> positions100,
+            Map<String, String> commanderPosiitions
+    ) {
+        this.positions70 = positions70;
+        this.positions100 = positions100;
+        this.commanderPosiitions = commanderPosiitions;
+    }
+
+    public List<String> getPosition70() {
+        return positions70;
+    }
+
+    public List<String> getPositions100() {
+        return positions100;
+    }
+
+    public Map<String, String> getCommanderPosiitions() {
+        return commanderPosiitions;
+    }
+}
