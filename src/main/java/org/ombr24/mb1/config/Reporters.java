@@ -7,7 +7,7 @@ public class Reporters {
     public final static Map<String, String> REPORTERS_MAP = initReportersMap();
 
     private static Map<String, String> initReportersMap() {
-        Map<String, String> map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         map.put("1 мр", "командира 1 мр");
         map.put("2 мр", "командира 2 мр");
         map.put("3 мр", "командира 3 мр");
