@@ -14,7 +14,7 @@ public class Ambushes
         map.add("Чиж");
         map.add("Садиба");
         map.add("Карпати");
-        map.add("Хмельниццький");
+        map.add("Хмельницький");
         map.add("Тернопіль");
         map.add("Кріт");
         map.add("Гайка");
