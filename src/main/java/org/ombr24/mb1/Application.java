@@ -6,9 +6,8 @@ import org.ombr24.mb1.utils.XlsProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Головний клас додатку для обробки звітів бойових підрозділів
@@ -21,7 +20,16 @@ public class Application {
 
     public static void main(String[] args) {
         BufferedReader reader = null;
+        PrintStream out = null;
         try {
+            // Встановлюємо UTF-8 для консольного виводу
+            out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+            System.setOut(out);
+            
+            // Встановлюємо UTF-8 для System.err
+            PrintStream err = new PrintStream(System.err, true, StandardCharsets.UTF_8);
+            System.setErr(err);
+            
             logger.info("=== Запуск додатку обробки звітів ===");
             logger.info("Робоча директорія: {}", System.getProperty("user.dir"));
 
@@ -31,8 +39,8 @@ public class Application {
             ReferenceData refData = new ReferenceDataLoader().load(config);
             logger.info("Довідкові дані завантажено успішно");
 
-            // Створюємо reader один раз для всіх читань
-            reader = new BufferedReader(new InputStreamReader(System.in));
+            // Створюємо reader з UTF-8 кодуванням
+            reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
             int startDate = readDate("Введіть початкову дату (день місяця)", reader);
             int endDate = readDate("Введіть кінцеву дату (день місяця)", reader);
