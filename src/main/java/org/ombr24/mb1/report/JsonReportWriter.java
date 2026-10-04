@@ -30,6 +30,7 @@ public class JsonReportWriter implements ReportWriter {
 
     private final ReferenceData referenceData;
     private final Gson gson;
+    private final UnitFormatter unitFormatter = new UnitFormatter();
 
     public JsonReportWriter(ReferenceData referenceData) {
         this.referenceData = referenceData;
@@ -145,31 +146,8 @@ public class JsonReportWriter implements ReportWriter {
                                     boolean includePositionType) {
         return units.stream()
                 .filter(filter)
-                .map(unit -> formatUnit(unit, includePositionType))
+                .map(unit -> unitFormatter.format(unit, includePositionType))
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * Форматує окремий підрозділ
-     */
-    private String formatUnit(BattleUnit unit, boolean includePositionType) {
-        StringBuilder sb = new StringBuilder();
-        
-        sb.append(unit.getFullNameWithRank());
-        
-        if (includePositionType) {
-            sb.append(" (ПВ «")
-              .append(unit.getPosition())
-              .append("»)");
-        }
-        
-        if (unit.isAdded()) {
-            sb.append(" (").append(unit.getAddedFrom()).append(")");
-        }
-        
-        sb.append(";");
-        
-        return sb.toString();
     }
 
     /**

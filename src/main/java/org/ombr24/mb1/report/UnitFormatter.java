@@ -1,6 +1,6 @@
 package org.ombr24.mb1.report;
 
-import org.ombr24.mb1.config.Ambushes;
+import org.ombr24.mb1.config.TZPositions;
 import org.ombr24.mb1.config.Constants;
 import org.ombr24.mb1.domain.BattleUnit;
 
@@ -58,8 +58,8 @@ public class UnitFormatter {
      * Визначає тип позиції (ВЗ або ПВ)
      */
     private String getPositionType(String position) {
-        return Ambushes.REPORTERS_MAP.contains(position) 
-                ? Constants.POSITION_TYPE_VZ 
-                : Constants.POSITION_TYPE_PV;
+        return TZPositions.POSITION_TYPE_MAP.contains(position)
+                ? Constants.POSITION_TYPE_TZ
+                : Constants.POSITION_TYPE_BP;
     }
 }

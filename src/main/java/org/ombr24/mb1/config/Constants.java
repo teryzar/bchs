@@ -33,8 +33,7 @@ public final class Constants {
 
     // Позиції для різних категорій
     public static final String POSITION_30 = "30";
-    public static final String POSITION_70 = "70";
-    public static final String POSITION_100 = "100";
+
 
     // Індекси стовпців Excel
     public static final int REPORT_NR_COLUMN = 0;
@@ -52,6 +51,6 @@ public final class Constants {
     public static final String DATE_FORMAT = "dd.MM.yyyy";
 
     // Типи позицій для звітів
-    public static final String POSITION_TYPE_VZ = "(ВЗ «";
-    public static final String POSITION_TYPE_PV = "(ПВ «";
+    public static final String POSITION_TYPE_TZ = "(ТЗ «";
+    public static final String POSITION_TYPE_BP = "(БП «";
 }

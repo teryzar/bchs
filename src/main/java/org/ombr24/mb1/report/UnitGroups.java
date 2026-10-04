@@ -41,15 +41,4 @@ public class UnitGroups {
         return addedUnits;
     }
 
-    public int getTotalCount() {
-        return originalUnits.size() + addedUnits.size();
-    }
-
-    public int getOriginalCount() {
-        return originalUnits.size();
-    }
-
-    public int getAddedCount() {
-        return addedUnits.size();
-    }
 }
