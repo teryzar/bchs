@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.0 http://maven.apache.org/xsd/assembly-2.1.0.xsd">
+    <id>dist</id>
+    <formats>
+        <format>zip</format>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <baseDirectory>bchs-${project.version}</baseDirectory>
+
+    <fileSets>
+        <!-- Копіюємо скрипти запуску -->
+        <fileSet>
+            <directory>${project.basedir}</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>run.bat</include>
+                <include>run-utf8.bat</include>
+                <include>run-utf8.sh</include>
+            </includes>
+            <fileMode>0755</fileMode>
+            <filtered>true</filtered>
+        </fileSet>
+
+        <!-- Створюємо порожні директорії для даних -->
+        <fileSet>
+            <directory>${project.basedir}/data</directory>
+            <outputDirectory>/data</outputDirectory>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
+            <directoryMode>0755</directoryMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>${project.basedir}/logs</directory>
+            <outputDirectory>/logs</outputDirectory>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
+            <directoryMode>0755</directoryMode>
+        </fileSet>
+
+        <!-- Копіюємо README для дистрибутиву -->
+        <fileSet>
+            <directory>${project.basedir}</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>DISTRIBUTION_README.md</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+
+    <!-- Перейменовуємо DISTRIBUTION_README.md в README.md -->
+    <files>
+        <!-- Копіюємо JAR з залежностями -->
+        <file>
+            <source>${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        
+        <file>
+            <source>${project.basedir}/DISTRIBUTION_README.md</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>README.md</destName>
+        </file>
+    </files>
+</assembly>
