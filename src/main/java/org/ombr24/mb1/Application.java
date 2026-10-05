@@ -19,16 +19,17 @@ public class Application {
     private static final int MAX_DAY = 31;
 
     public static void main(String[] args) {
-        BufferedReader reader = null;
-        PrintStream out = null;
-        try {
-            // Встановлюємо UTF-8 для консольного виводу
-            out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
-            System.setOut(out);
-            
-            // Встановлюємо UTF-8 для System.err
-            PrintStream err = new PrintStream(System.err, true, StandardCharsets.UTF_8);
-            System.setErr(err);
+        // Встановлюємо UTF-8 для консольного виводу
+        // Не закриваємо ці потоки, оскільки вони системні
+        PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+        System.setOut(out);
+        
+        PrintStream err = new PrintStream(System.err, true, StandardCharsets.UTF_8);
+        System.setErr(err);
+        
+        // Використовуємо try-with-resources для автоматичного закриття reader
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
             
             logger.info("=== Запуск додатку обробки звітів ===");
             logger.info("Робоча директорія: {}", System.getProperty("user.dir"));
@@ -38,9 +39,6 @@ public class Application {
 
             ReferenceData refData = new ReferenceDataLoader().load(config);
             logger.info("Довідкові дані завантажено успішно");
-
-            // Створюємо reader з UTF-8 кодуванням
-            reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
             int startDate = readDate("Введіть початкову дату (день місяця)", reader);
             int endDate = readDate("Введіть кінцеву дату (день місяця)", reader);
@@ -61,20 +59,16 @@ public class Application {
             logger.error("Помилка валідації вводу: {}", e.getMessage());
             System.err.println("Помилка: " + e.getMessage());
             System.exit(1);
+        } catch (IOException e) {
+            logger.error("Помилка вводу/виводу", e);
+            System.err.println("Помилка вводу/виводу: " + e.getMessage());
+            System.exit(1);
         } catch (Exception e) {
             logger.error("Критична помилка виконання програми", e);
             System.err.println("Критична помилка: " + e.getMessage());
             System.exit(1);
-        } finally {
-            // Закриваємо reader в finally блоці
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    logger.warn("Не вдалося закрити BufferedReader", e);
-                }
-            }
         }
+        // Примітка: System.out і System.err не закриваємо, оскільки вони системні потоки
     }
 
     /**
