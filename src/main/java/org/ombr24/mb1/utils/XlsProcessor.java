@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.ombr24.mb1.config.*;
 import org.ombr24.mb1.domain.*;
 import org.ombr24.mb1.excel.AddedUnitMapper;
+import org.ombr24.mb1.excel.ExcelCellReader;
 import org.ombr24.mb1.excel.ExcelRowMapper;
 import org.ombr24.mb1.exception.DataProcessingException;
 import org.ombr24.mb1.exception.FileOperationException;
@@ -30,6 +31,7 @@ public class XlsProcessor {
     private final EngagementContext context = new EngagementContext();
     private final ExcelRowMapper excelRowMapper = new ExcelRowMapper();
     private final AddedUnitMapper addedUnitMapper = new AddedUnitMapper();
+    private final ExcelCellReader cellReader = new ExcelCellReader();
 
     public XlsProcessor(AppConfig config, ReferenceData referenceData) {
         this.config = config;
@@ -78,9 +80,9 @@ public class XlsProcessor {
         for (Row row : sheet) {
             try {
                 ParsedNumbersRow parsedNumbersRow = new ParsedNumbersRow();
-                parsedNumbersRow.setReportNr(getCellValueAsString(row, Constants.REPORT_NR_COLUMN));
+                parsedNumbersRow.setReportNr(cellReader.getCellValueAsString(row, Constants.REPORT_NR_COLUMN));
                 parsedNumbersRow.setReportDate(formatter.format(row.getCell(Constants.REPORT_DATE_COLUMN).getDateCellValue()));
-                parsedNumbersRow.setDivision(getCellValueAsString(row, Constants.DIVISION_COLUMN));
+                parsedNumbersRow.setDivision(cellReader.getCellValueAsString(row, Constants.DIVISION_COLUMN));
                 parsedNumbersList.add(parsedNumbersRow);
             } catch (Exception e) {
                 logger.warn("Не вдалося обробити рядок {}: {}", row.getRowNum(), e.getMessage());
@@ -144,8 +146,8 @@ public class XlsProcessor {
         // Читання інформації про командира
         Row commanderRow = sheet.getRow(Constants.COMMANDER_ROW);
         if (commanderRow != null) {
-            String commanderRank = getCellValueAsString(commanderRow, Constants.RANK_COLUMN);
-            String commanderName = getCellValueAsString(commanderRow, Constants.NAME_COLUMN);
+            String commanderRank = cellReader.getCellValueAsString(commanderRow, Constants.RANK_COLUMN);
+            String commanderName = cellReader.getCellValueAsString(commanderRow, Constants.NAME_COLUMN);
 
             context.getCommanderRank().put(sheetName, commanderRank);
             context.getCommanderName().put(sheetName, formatName(commanderName));
@@ -308,28 +310,6 @@ public class XlsProcessor {
         }
 
         return parts[1] + " " + parts[0].toUpperCase();
-    }
-
-    /**
-     * Отримує значення комірки як рядок
-     */
-    private String getCellValueAsString(Row row, int columnIndex) {
-        Cell cell = row.getCell(columnIndex);
-        if (cell == null) {
-            return "";
-        }
-
-        try {
-            return cell.getStringCellValue().trim();
-        } catch (IllegalStateException e) {
-            // Якщо комірка не містить текст, спробувати інші типи
-            try {
-                return String.valueOf(cell.getNumericCellValue());
-            } catch (IllegalStateException ex) {
-                logger.warn("Не вдалося прочитати значення комірки [{}:{}]", row.getRowNum(), columnIndex);
-                return "";
-            }
-        }
     }
 
     /**

@@ -1,27 +1,27 @@
 package org.ombr24.mb1.excel;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
 import org.ombr24.mb1.domain.ParsedRow;
 
+/**
+ * Mapper для перетворення Excel рядків в ParsedRow об'єкти
+ */
 public class ExcelRowMapper {
 
-    private final DataFormatter formatter = new DataFormatter();
+    private final ExcelCellReader cellReader = new ExcelCellReader();
 
+    /**
+     * Перетворює рядок Excel в ParsedRow
+     * 
+     * @param row рядок Excel
+     * @param posIndex індекс колонки з позицією
+     * @return ParsedRow з даними про звання, ім'я та позицію
+     */
     public ParsedRow map(Row row, int posIndex) {
         return new ParsedRow(
-                read(row, 0),
-                read(row, 1),
-                format(row, posIndex)
+                cellReader.readString(row, 0),
+                cellReader.readString(row, 1),
+                cellReader.formatCell(row, posIndex)
         );
-    }
-
-    private String read(Row r, int i) {
-        Cell c = r.getCell(i);
-        return c == null ? "" : c.getStringCellValue().trim();
-    }
-
-    private String format(Row r, int i) {
-        Cell c = r.getCell(i);
-        return c == null ? "" : formatter.formatCellValue(c).trim();
     }
 }
