@@ -246,7 +246,7 @@ class ConfigurationIntegrationTest {
     void shouldHaveCorrectConstants() {
         // Then
         assertThat(Constants.NUMBERS_SHEET).isEqualTo("numbers.xlsx");
-        assertThat(Constants.ADDED_UNITS_SHEET).isEqualTo("Придані");
+        assertThat(Constants.ADDED_UNITS_SHEET).isEqualTo("оперативне підпорядкування");
         assertThat(Constants.FIRST_DATA_SHEET).isEqualTo("1 мр");
         assertThat(Constants.DATE_FORMAT).isEqualTo("dd.MM.yyyy");
         assertThat(Constants.POSITION_30).isEqualTo("30");
@@ -259,7 +259,11 @@ class ConfigurationIntegrationTest {
         assertThat(Constants.DIVISION_COLUMN).isEqualTo(2);
 
         assertThat(Constants.SKIP_SHEETS)
-            .contains("Придані", "1 (2)", "Код позиції");
+            .contains( "ПРИМІТКИ",
+                    "Управління",
+                    "Прикомандировані",
+                    "БРЕЗ",
+                    "оперативне підпорядкування");
     }
 
     @Test
