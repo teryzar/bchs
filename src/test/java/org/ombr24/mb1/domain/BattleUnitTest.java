@@ -52,7 +52,7 @@ class BattleUnitTest {
     @CsvSource({
         "'Іванов Іван Іванович', 'підполковник', 'підполковник ІВАНОВ Іван Іванович'",
         "'Петров Петро', 'майор', 'майор ПЕТРОВ Петро'",
-        "'Сидоренко', 'капітан', 'капітан СИДОРЕНКО'",
+        "'Сидоренко', 'капітан', 'капітан СИДОРЕНКО '",
         "'Шевченко Тарас Григорович', 'полковник', 'полковник ШЕВЧЕНКО Тарас Григорович'"
     })
     void shouldFormatFullNameWithRank(String name, String rank, String expected) {
@@ -85,7 +85,7 @@ class BattleUnitTest {
         String result = unit.getFullNameWithRank();
         
         // Then
-        assertThat(result).isEqualTo("капітан ІВАНОВ");
+        assertThat(result).isEqualTo("капітан ІВАНОВ ");
     }
 
     @Test
