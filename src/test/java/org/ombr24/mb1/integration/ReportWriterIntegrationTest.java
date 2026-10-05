@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -88,7 +89,7 @@ class ReportWriterIntegrationTest {
         // Then
         List<Path> jsonFiles = Files.list(outputDir.resolve("json"))
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
 
         // Має бути 2 JSON файли (для 1 мр та 2 мр)
         assertThat(jsonFiles).hasSizeGreaterThanOrEqualTo(2);
@@ -174,7 +175,7 @@ class ReportWriterIntegrationTest {
         // Then
         List<Path> jsonFiles = Files.list(outputDir.resolve("json"))
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
 
         assertThat(jsonFiles).isNotEmpty();
         
@@ -217,7 +218,7 @@ class ReportWriterIntegrationTest {
         
         List<Path> jsonFiles = Files.list(outputDir.resolve("json"))
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
         assertThat(jsonFiles).isNotEmpty();
 
         // Обидва типи звітів мають містити ті самі підрозділи

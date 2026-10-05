@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -80,7 +81,7 @@ class XlsProcessorIntegrationTest {
         
         List<Path> jsonFiles = Files.list(jsonDir)
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
         assertThat(jsonFiles).isNotEmpty();
     }
 
@@ -105,7 +106,7 @@ class XlsProcessorIntegrationTest {
         // Перевіряємо кількість JSON файлів (3 дні * 3 підрозділи)
         List<Path> jsonFiles = Files.list(outputDir.resolve("json"))
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
         assertThat(jsonFiles.size()).isGreaterThanOrEqualTo(9);
     }
 
@@ -168,7 +169,7 @@ class XlsProcessorIntegrationTest {
         // Then
         List<Path> jsonFiles = Files.list(outputDir.resolve("json"))
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
 
         assertThat(jsonFiles).isNotEmpty();
 

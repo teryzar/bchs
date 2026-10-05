@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -100,7 +101,7 @@ class ReportGenerationIntegrationTest {
         // Then
         List<Path> jsonFiles = Files.list(outputDir.resolve("json"))
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
 
         assertThat(jsonFiles).hasSizeGreaterThanOrEqualTo(3);
 
@@ -145,7 +146,7 @@ class ReportGenerationIntegrationTest {
             .filter(p -> p.toString().endsWith(".json"))
             .findFirst()
             .stream()
-            .toList();
+            .collect(Collectors.toList());
 
         assertThat(jsonFiles).isNotEmpty();
         String jsonContent = Files.readString(jsonFiles.get(0));
@@ -242,7 +243,7 @@ class ReportGenerationIntegrationTest {
 
         List<Path> jsonFiles = Files.list(outputDir.resolve("json"))
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
 
         // Перевіряємо що кожен підрозділ з JSON є в текстовому звіті
         for (Path jsonFile : jsonFiles) {
@@ -268,7 +269,7 @@ class ReportGenerationIntegrationTest {
         // Then
         List<Path> jsonFiles = Files.list(outputDir.resolve("json"))
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
 
         for (Path jsonFile : jsonFiles) {
             String jsonContent = Files.readString(jsonFile);

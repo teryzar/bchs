@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -75,7 +76,7 @@ class EndToEndIntegrationTest {
         Path jsonDir = Path.of(config.divisionJsonReport(15));
         List<Path> jsonFiles = Files.list(jsonDir)
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
         assertThat(jsonFiles).hasSizeGreaterThanOrEqualTo(3);
 
         // 3. Вміст звітів коректний
@@ -124,7 +125,7 @@ class EndToEndIntegrationTest {
         Path jsonDir = Path.of(config.divisionJsonReport(1));
         List<Path> allJsonFiles = Files.list(jsonDir)
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
         
         // 5 днів × 3 підрозділи = 15 файлів мінімум
         assertThat(allJsonFiles.size()).isGreaterThanOrEqualTo(15);
@@ -172,7 +173,7 @@ class EndToEndIntegrationTest {
         Path jsonDir = Path.of(config.divisionJsonReport(15));
         List<Path> jsonFiles = Files.list(jsonDir)
             .filter(p -> p.toString().endsWith(".json"))
-            .toList();
+            .collect(Collectors.toList());
 
         boolean hasAddedUnits = false;
         for (Path jsonFile : jsonFiles) {
@@ -210,7 +211,7 @@ class EndToEndIntegrationTest {
                     return "";
                 }
             })
-            .toList();
+            .collect(Collectors.toList());
 
         // Then: перевіряємо консистентність
         // Кожен підрозділ з текстового звіту має бути в JSON
