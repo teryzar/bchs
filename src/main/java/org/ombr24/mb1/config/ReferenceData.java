@@ -7,16 +7,16 @@ public class ReferenceData {
 
     private final List<String> positions70;
     private final List<String> positions100;
-    private final Map<String, String> commanderPosiitions;
+    private final Map<String, String> commanderPositions;
 
     public ReferenceData(
             List<String> positions70,
             List<String> positions100,
-            Map<String, String> commanderPosiitions
+            Map<String, String> commanderPositions
     ) {
         this.positions70 = positions70;
         this.positions100 = positions100;
-        this.commanderPosiitions = commanderPosiitions;
+        this.commanderPositions = commanderPositions;
     }
 
     public List<String> getPositions70() {
@@ -28,6 +28,6 @@ public class ReferenceData {
     }
 
     public Map<String, String> getCommanderPositions() {
-        return commanderPosiitions;
+        return commanderPositions;
     }
 }
