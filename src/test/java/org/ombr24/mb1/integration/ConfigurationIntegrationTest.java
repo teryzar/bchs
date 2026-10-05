@@ -52,7 +52,7 @@ class ConfigurationIntegrationTest {
         ReferenceData referenceData = new ReferenceDataLoader().load(config);
 
         // Then
-        assertThat(referenceData.getPosition70())
+        assertThat(referenceData.getPositions70())
             .isNotEmpty()
             .hasSize(6)
             .contains("70", "71", "72", "73", "74", "75");
@@ -62,7 +62,7 @@ class ConfigurationIntegrationTest {
             .hasSize(5)
             .contains("100", "101", "102", "103", "104");
 
-        assertThat(referenceData.getCommanderPosiitions())
+        assertThat(referenceData.getCommanderPositions())
             .isNotEmpty()
             .hasSize(3)
             .containsEntry("1 мр", "Командир 1 мр батальйону")
@@ -89,9 +89,9 @@ class ConfigurationIntegrationTest {
         ReferenceData referenceData = new ReferenceDataLoader().load(config);
 
         // Then
-        assertThat(referenceData.getPosition70()).containsExactly("70");
+        assertThat(referenceData.getPositions70()).containsExactly("70");
         assertThat(referenceData.getPositions100()).containsExactly("100");
-        assertThat(referenceData.getCommanderPosiitions()).containsExactly(
+        assertThat(referenceData.getCommanderPositions()).containsExactly(
             entry("1 мр", "Командир")
         );
     }
@@ -155,9 +155,9 @@ class ConfigurationIntegrationTest {
         ReferenceData referenceData = new ReferenceDataLoader().load(config);
 
         // Then
-        assertThat(referenceData.getPosition70())
+        assertThat(referenceData.getPositions70())
             .contains("70", "71 - позиція");
-        assertThat(referenceData.getCommanderPosiitions())
+        assertThat(referenceData.getCommanderPositions())
             .containsEntry("1 мр", "Командир з ініціалами Ї.Є.");
     }
 
@@ -190,10 +190,10 @@ class ConfigurationIntegrationTest {
         ReferenceData referenceData = new ReferenceDataLoader().load(config);
 
         // Then
-        assertThat(referenceData.getPosition70())
+        assertThat(referenceData.getPositions70())
             .hasSize(3)
             .containsExactly("70", "71", "72");
-        assertThat(referenceData.getCommanderPosiitions())
+        assertThat(referenceData.getCommanderPositions())
             .hasSize(2);
     }
 
@@ -236,7 +236,7 @@ class ConfigurationIntegrationTest {
         ReferenceData referenceData = new ReferenceDataLoader().load(config);
 
         // Then
-        assertThat(referenceData.getPosition70()).containsExactly("70");
+        assertThat(referenceData.getPositions70()).containsExactly("70");
         assertThat(referenceData.getPositions100()).containsExactly("100");
     }
 
@@ -294,12 +294,12 @@ class ConfigurationIntegrationTest {
         ReferenceData referenceData = new ReferenceDataLoader().load(config);
 
         // When/Then - спроба модифікації не має впливати на оригінальні дані
-        List<String> positions70 = referenceData.getPosition70();
+        List<String> positions70 = referenceData.getPositions70();
         int originalSize = positions70.size();
 
         // Перевіряємо що можемо читати дані
         assertThat(positions70).isNotEmpty();
-        assertThat(referenceData.getPosition70()).hasSize(originalSize);
+        assertThat(referenceData.getPositions70()).hasSize(originalSize);
     }
 
     @Test
@@ -329,7 +329,7 @@ class ConfigurationIntegrationTest {
         ReferenceData referenceData = new ReferenceDataLoader().load(config);
 
         // Then - дублікати можуть бути збережені в списку, але в мапі залишається перше значення
-        assertThat(referenceData.getCommanderPosiitions().get("1 мр"))
+        assertThat(referenceData.getCommanderPositions().get("1 мр"))
             .isEqualTo("Командир перший");
     }
 

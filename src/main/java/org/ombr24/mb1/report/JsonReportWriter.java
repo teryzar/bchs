@@ -100,7 +100,7 @@ public class JsonReportWriter implements ReportWriter {
         report.setList6(formatUnitsForPosition30(addedUnits));
 
         // Інформація про командира
-        report.setPosition(referenceData.getCommanderPosiitions().get(division));
+        report.setPosition(referenceData.getCommanderPositions().get(division));
         report.setRank(context.getCommanderRank().get(division));
         report.setName(context.getCommanderName().get(division));
         report.setReporter(Reporters.REPORTERS_MAP.get(division));
@@ -117,7 +117,7 @@ public class JsonReportWriter implements ReportWriter {
      */
     private List<String> formatUnitsForPosition70(List<BattleUnit> units) {
         return formatUnits(units, 
-            unit -> referenceData.getPosition70().contains(unit.getPosition()),
+            unit -> referenceData.getPositions70().contains(unit.getPosition()),
             true);
     }
 

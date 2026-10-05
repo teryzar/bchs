@@ -68,9 +68,8 @@ class EndToEndIntegrationTest {
         
         // 1. Текстовий звіт створено
         Path textReport = Path.of(config.divisionReport(15));
-        assertThat(textReport)
-            .exists()
-            .isNotEmpty();
+        assertThat(textReport).exists();
+        assertThat(Files.size(textReport)).isGreaterThan(0);
 
         // 2. JSON звіти створено
         Path jsonDir = Path.of(config.divisionJsonReport(15));

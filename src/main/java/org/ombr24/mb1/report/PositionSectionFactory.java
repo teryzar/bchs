@@ -34,7 +34,7 @@ public class PositionSectionFactory {
     public PositionSection createPosition70Section() {
         return PositionSection.builder()
                 .title("На 70:")
-                .filter(unit -> referenceData.getPosition70().contains(unit.getPosition()))
+                .filter(unit -> referenceData.getPositions70().contains(unit.getPosition()))
                 .includePositionType(true)
                 .build();
     }

@@ -2,7 +2,6 @@ package org.ombr24.mb1.config;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class ReferenceData {
 
@@ -20,7 +19,7 @@ public class ReferenceData {
         this.commanderPosiitions = commanderPosiitions;
     }
 
-    public List<String> getPosition70() {
+    public List<String> getPositions70() {
         return positions70;
     }
 
@@ -28,7 +27,7 @@ public class ReferenceData {
         return positions100;
     }
 
-    public Map<String, String> getCommanderPosiitions() {
+    public Map<String, String> getCommanderPositions() {
         return commanderPosiitions;
     }
 }

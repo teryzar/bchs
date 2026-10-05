@@ -116,7 +116,7 @@ class XlsProcessorErrorHandlingIntegrationTest {
         ReferenceData referenceData = new ReferenceDataLoader().load(config);
 
         // Then - має завантажитись, проігнорувавши некоректні рядки
-        assertThat(referenceData.getCommanderPosiitions()).isNotNull();
+        assertThat(referenceData.getCommanderPositions()).isNotNull();
     }
 
     @Test
@@ -137,9 +137,9 @@ class XlsProcessorErrorHandlingIntegrationTest {
         ReferenceData referenceData = new ReferenceDataLoader().load(config);
 
         // Then
-        assertThat(referenceData.getPosition70()).isEmpty();
+        assertThat(referenceData.getPositions70()).isEmpty();
         assertThat(referenceData.getPositions100()).isEmpty();
-        assertThat(referenceData.getCommanderPosiitions()).isEmpty();
+        assertThat(referenceData.getCommanderPositions()).isEmpty();
     }
 
     @Test
