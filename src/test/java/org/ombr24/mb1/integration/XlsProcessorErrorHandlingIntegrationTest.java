@@ -5,7 +5,6 @@ import org.junit.jupiter.api.io.TempDir;
 import org.ombr24.mb1.config.AppConfig;
 import org.ombr24.mb1.config.ReferenceData;
 import org.ombr24.mb1.config.ReferenceDataLoader;
-import org.ombr24.mb1.exception.DataProcessingException;
 import org.ombr24.mb1.exception.FileOperationException;
 import org.ombr24.mb1.utils.XlsProcessor;
 
