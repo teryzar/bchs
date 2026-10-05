@@ -11,8 +11,8 @@ public class EngagementContext {
 
     private final Map<String, List<BattleUnit>> assignments = new HashMap<>();
     private final Map<String, List<BattleUnit>> infantryByDivision = new TreeMap<>();
-    private Map<String, String> commanderRank = new HashMap<>();
-    private Map<String, String> commanderName = new HashMap<>();
+    private final Map<String, String> commanderRank = new HashMap<>();
+    private final Map<String, String> commanderName = new HashMap<>();
     private String reportDate;
     private List<ParsedNumbersRow> parsedNumberList;
 
