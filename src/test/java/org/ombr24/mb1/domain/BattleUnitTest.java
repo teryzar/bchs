@@ -72,7 +72,7 @@ class BattleUnitTest {
         BattleUnit unit = new BattleUnit("майор", "", "70", false, null, null);
         
         // When/Then - перевіряємо що не падає з NullPointerException
-        assertThatCode(() -> unit.getFullNameWithRank())
+        assertThatCode(unit::getFullNameWithRank)
             .doesNotThrowAnyException();
     }
 
