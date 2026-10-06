@@ -89,9 +89,15 @@ public class ReferenceDataLoader {
     }
 
     /**
-     * Резолвить відносний шлях відносно робочої директорії
+     * Перетворює шлях на Path, обробляючи як абсолютні, так і відносні шляхи
      */
     private Path resolvePath(String filePath) {
+        Path path = Paths.get(filePath);
+        // Якщо шлях вже абсолютний (наприклад, з тестів), використовуємо його як є
+        if (path.isAbsolute()) {
+            return path;
+        }
+        // Інакше резолвимо відносно робочої директорії
         return Paths.get(System.getProperty("user.dir"), filePath);
     }
 

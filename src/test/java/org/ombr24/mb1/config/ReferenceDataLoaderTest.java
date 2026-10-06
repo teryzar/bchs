@@ -62,7 +62,12 @@ class ReferenceDataLoaderTest {
         Files.createDirectories(configDir);
 
         Path positions70 = configDir.resolve("positions70.txt");
+        Path positions100 = configDir.resolve("positions100.txt");
+        Path commanders = configDir.resolve("commanders.txt");
+        
         Files.write(positions70, List.of("70", "", "71", "  ", "72"));
+        Files.write(positions100, List.of("100"));
+        Files.write(commanders, List.of("1 мр:Командир"));
 
         AppConfig config = new AppConfig(
             tempDir.resolve("data").toString(),
@@ -85,7 +90,12 @@ class ReferenceDataLoaderTest {
         Path configDir = tempDir.resolve("config");
         Files.createDirectories(configDir);
 
+        Path positions70 = configDir.resolve("positions70.txt");
+        Path positions100 = configDir.resolve("positions100.txt");
         Path commanders = configDir.resolve("commanders.txt");
+        
+        Files.write(positions70, List.of("70"));
+        Files.write(positions100, List.of("100"));
         Files.write(commanders, List.of("  1 мр  :  Командир1  "));
 
         AppConfig config = new AppConfig(
@@ -108,7 +118,12 @@ class ReferenceDataLoaderTest {
         Path configDir = tempDir.resolve("config");
         Files.createDirectories(configDir);
 
+        Path positions70 = configDir.resolve("positions70.txt");
+        Path positions100 = configDir.resolve("positions100.txt");
         Path commanders = configDir.resolve("commanders.txt");
+        
+        Files.write(positions70, List.of("70"));
+        Files.write(positions100, List.of("100"));
         Files.write(commanders, List.of("1 мр:Командир1", "1 мр:Командир2"));
 
         AppConfig config = new AppConfig(
@@ -145,7 +160,12 @@ class ReferenceDataLoaderTest {
         Path configDir = tempDir.resolve("config");
         Files.createDirectories(configDir);
 
+        Path positions70 = configDir.resolve("positions70.txt");
+        Path positions100 = configDir.resolve("positions100.txt");
         Path commanders = configDir.resolve("commanders.txt");
+        
+        Files.write(positions70, List.of("70"));
+        Files.write(positions100, List.of("100"));
         Files.write(commanders, List.of("InvalidLineWithoutColon"));
 
         AppConfig config = new AppConfig(
